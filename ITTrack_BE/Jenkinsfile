@@ -2,43 +2,34 @@ pipeline {
     agent any
 
     tools {
-        // Optionnel si tu veux utiliser une installation Maven globale sur Jenkins
-        // maven 'Maven3'
+        // Optionnel si tu veux forcer un JDK installé dans Jenkins
+        // nom du JDK configuré dans Manage Jenkins > Global Tool Configuration
+        jdk 'jdk-17'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master',
-                    url: 'https://github.com/mohamedgader/MadrassaCloud_BE.git'
+                git branch: 'master', url: 'https://github.com/mohamedgader/MadrassaCloud_BE.git'
             }
         }
 
         stage('Build') {
             steps {
-                bat '.\\mvnw.cmd clean package -DskipTests'
+                bat 'mvnw.cmd clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                bat '.\\mvnw.cmd test'
+                bat 'mvnw.cmd test'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Déploiement fictif ici (ex: copie du JAR, docker build, etc.)'
+                echo 'Déploiement... (à compléter selon ton besoin)'
             }
-        }
-    }
-
-    post {
-        success {
-            echo '✅ Build terminé avec succès'
-        }
-        failure {
-            echo '❌ Build échoué'
         }
     }
 }
