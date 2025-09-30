@@ -1,25 +1,30 @@
 pipeline {
     agent any
+
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/mohamedgader/MadrassaCloud_BE.git'
+                git branch: 'master', url: 'https://github.com/mohamedgader/MadrassaCloud_BE.git'
             }
         }
+
         stage('Build') {
             steps {
-                sh '.mvnw clean package'  ou la commande de build adaptée à votre projet
+                bat '.mvnw clean package -DskipTests'
             }
         }
+
         stage('Test') {
             steps {
-                sh '.mvnw test'  adapter selon votre outil de test
+                bat '.mvnw test'
             }
         }
+
         stage('Deploy') {
             steps {
-                 Exemple de déploiement sur Render avec leur CLI ou via commande curlAPI
-                sh 'render deploy --service votre-service --api-key $RENDER_API_KEY'
+                echo "Déploiement en cours..."
+                // Exemple Render (si tu configures RENDER_API_KEY dans Jenkins -> Manage Jenkins > Credentials)
+                // bat 'render deploy --service votre-service --api-key %RENDER_API_KEY%'
             }
         }
     }
