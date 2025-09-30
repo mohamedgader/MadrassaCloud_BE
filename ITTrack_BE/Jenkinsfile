@@ -2,25 +2,29 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk-17'
+        jdk 'jdk-17' // Utilisation de JDK 17 configuré dans Jenkins
     }
 
     stages {
         stage('Checkout') {
             steps {
+                // Récupération du code source depuis la branche master du dépôt Git
                 git branch: 'master', url: 'https://github.com/mohamedgader/MadrassaCloud_BE.git'
             }
         }
 
         stage('Check Java') {
             steps {
+                // Vérification de la version de Java disponible sur l'agent Jenkins
                 bat 'java -version'
             }
         }
 
         stage('Build') {
             steps {
-                dir('ITTrack_BE/ITTrack_BE') {   // 🔥 aller dans le bon dossier
+                // Se placer dans le dossier ITTrack_BE où est situé le projet Maven
+                dir('ITTrack_BE') {
+                    // Exécuter Maven Wrapper pour compiler et packager sans lancer les tests
                     bat 'mvnw.cmd clean package -DskipTests'
                 }
             }
@@ -28,7 +32,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('ITTrack_BE/ITTrack_BE') {
+                dir('ITTrack_BE') {
+                    // Lancer les tests Maven dans ce répertoire
                     bat 'mvnw.cmd test'
                 }
             }
