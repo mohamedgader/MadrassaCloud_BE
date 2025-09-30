@@ -1,10 +1,14 @@
 pipeline {
     agent any
 
+    tools {
+        // Optionnel si tu veux utiliser une installation Maven globale sur Jenkins
+        // maven 'Maven3'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                // Clone du repo
                 git branch: 'master',
                     url: 'https://github.com/mohamedgader/MadrassaCloud_BE.git'
             }
@@ -12,16 +16,29 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Lancer le build Maven
                 bat '.\\mvnw.cmd clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                // Lancer les tests Maven
                 bat '.\\mvnw.cmd test'
             }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Déploiement fictif ici (ex: copie du JAR, docker build, etc.)'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build terminé avec succès'
+        }
+        failure {
+            echo '❌ Build échoué'
         }
     }
 }
