@@ -10,21 +10,20 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat '.mvnw clean package -DskipTests'
+                bat 'mvnw.cmd clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                bat '.mvnw test'
+                bat 'mvnw.cmd test'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo "Déploiement en cours..."
-                // Exemple Render (si tu configures RENDER_API_KEY dans Jenkins -> Manage Jenkins > Credentials)
-                // bat 'render deploy --service votre-service --api-key %RENDER_API_KEY%'
+                // Exemple : bat 'render deploy --service votre-service --api-key %RENDER_API_KEY%'
             }
         }
     }
