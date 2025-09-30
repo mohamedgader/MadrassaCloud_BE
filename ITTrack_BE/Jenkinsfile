@@ -2,15 +2,20 @@ pipeline {
     agent any
 
     tools {
-        // Optionnel si tu veux forcer un JDK installé dans Jenkins
-        // nom du JDK configuré dans Manage Jenkins > Global Tool Configuration
-        jdk 'jdk-17'
+        jdk 'jdk-17'   // doit correspondre exactement au "Name" défini dans Jenkins
+        maven 'Maven3' // si tu as configuré Maven dans Jenkins (sinon on utilisera mvnw)
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/mohamedgader/MadrassaCloud_BE.git'
+            }
+        }
+
+        stage('Check Java') {
+            steps {
+                bat 'java -version'
             }
         }
 
@@ -23,12 +28,6 @@ pipeline {
         stage('Test') {
             steps {
                 bat 'mvnw.cmd test'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Déploiement... (à compléter selon ton besoin)'
             }
         }
     }
