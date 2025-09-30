@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clone du repo
+                git branch: 'master',
+                    url: 'https://github.com/mohamedgader/MadrassaCloud_BE.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Lancer le build Maven
+                bat '.\\mvnw.cmd clean package -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Lancer les tests Maven
+                bat '.\\mvnw.cmd test'
+            }
+        }
+    }
+}
