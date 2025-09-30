@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk-17'   // doit correspondre exactement au "Name" défini dans Jenkins
-        maven 'Maven3' // si tu as configuré Maven dans Jenkins (sinon on utilisera mvnw)
+        jdk 'jdk-17'   // Doit correspondre au nom défini dans Jenkins
     }
 
     stages {
@@ -21,13 +20,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvnw.cmd clean package -DskipTests'
+                bat './mvnw.cmd clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvnw.cmd test'
+                bat './mvnw.cmd test'
             }
         }
     }
